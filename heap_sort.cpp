@@ -90,6 +90,33 @@ class heap{
         heapIncreaseKey(arrSize - 1, newValue);
     }
 
+    int extractHeapMinimum() {
+        int arrSize = heapElements.size();
+        if (arrSize == 0) {
+            cout << "empty heap" << endl;
+            return false;
+        }
+
+        // search for the min item
+        int minIndex = 0;
+        for (int i = 1; i < arrSize; i++) {
+            if (heapElements[i] < heapElements[minIndex]) {
+                minIndex = i;
+            }
+        }
+
+        int minValue = heapElements[minIndex];
+        // swap with the last one and then delete it
+        swap(heapElements[minIndex], heapElements[arrSize - 1]);
+        heapElements.pop_back();
+
+        // rebuild the heap
+        buildMaxHeap();
+
+        return minValue;
+    }
+
+
 };
 
 int main(){
