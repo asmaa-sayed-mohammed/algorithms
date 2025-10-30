@@ -2,6 +2,7 @@
 #include <vector>
 using namespace std;
 class heap{
+public:
     vector<int> heapElements;
     //take elements to build the heap
     heap(int size) {
@@ -48,7 +49,7 @@ class heap{
         //compute the size
         int size = heapElements.size();
 
-        for (int i = 0; i < (size / 2) -1; i++) {
+        for (int i = (size / 2); i > 0 -1; i--) {
             maxHeapify(i, size);
         }
     }
@@ -64,7 +65,7 @@ class heap{
             swap(heapElements[0], heapElements[arrSize - 1]); // let it be the last node to delete it
             heapElements.pop_back(); // delete the max element
             arrSize = heapElements.size(); // update the size after deleting, or you can paa arrsize - 2 in maxHeapify
-            maxHeapify(0, arrSize - 1); // reheapify the array to be a valid heap
+            maxHeapify(0, arrSize); // reheapify the array to be a valid heap
             return max; // return the max element
         }
     }
@@ -76,7 +77,7 @@ class heap{
         }else {
             heapElements[i] = key;
             int parentIndex = parent(i);
-            while (i > 0 && heapElements[parentIndex] > heapElements[i]) {
+            while (i > 0 && heapElements[parentIndex] < heapElements[i]) {
                 swap(heapElements[i], heapElements[parentIndex]);
                 i = parentIndex;
             }
@@ -85,9 +86,10 @@ class heap{
 
     // add new value to the heap and confirm that it is agreed with heap's conditions
     void insert(int newValue) {
-        heapElements.push_back(-1e9); // let the new element = - infinity then increase it to the new value
+        heapElements.push_back(INT_MIN); // let the new element = - infinity then increase it to the new value
         int arrSize = heapElements.size();
         heapIncreaseKey(arrSize - 1, newValue);
+        buildMaxHeap();
     }
 
     int extractHeapMinimum() {
@@ -120,5 +122,9 @@ class heap{
 };
 
 int main(){
-
+    heap h(5);
+    h.buildMaxHeap();
+    cout << "Max: " << h.extractHeapMaximum() << endl;
+    h.insert(42);
+    cout << "Max after insert: " << h.extractHeapMaximum() << endl;
 }
