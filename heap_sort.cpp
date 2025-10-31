@@ -5,7 +5,8 @@ class heap{
 public:
     vector<int> heapElements;
     //take elements to build the heap
-    heap(int size) {
+    heap(){}
+    void insertArray(int size) {
         int element;
         for (int i = 0; i < size; i++) {
             cin >> element;
@@ -59,7 +60,7 @@ public:
         int arrSize = heapElements.size();
         if (arrSize == 0) {
             cout<<"empty heap"<<endl;
-            return false;
+            return -1;
         }else {
             int max = heapElements[0]; // get the largest number of heap
             swap(heapElements[0], heapElements[arrSize - 1]); // let it be the last node to delete it
@@ -96,7 +97,7 @@ public:
         int arrSize = heapElements.size();
         if (arrSize == 0) {
             cout << "empty heap" << endl;
-            return false;
+            return -1;
         }
 
         // search for the min item
@@ -117,14 +118,39 @@ public:
 
         return minValue;
     }
-
+    void heapSort(vector<int> &arr){
+        buildMaxHeap();
+        for(int i = arr.size()-1 ; i > 0 ;i--){
+            swap(arr[0] , arr[i]);
+            maxHeapify(0,i);
+        }
+    }
+    void print(){
+        for(int i = 0 ; i < heapElements.size() ; i++){
+            cout << heapElements[i] << " ";
+        }
+        cout << endl << endl;
+    }
 
 };
 
-int main(){
-    heap h(5);
-    h.buildMaxHeap();
-    cout << "Max: " << h.extractHeapMaximum() << endl;
-    h.insert(42);
-    cout << "Max after insert: " << h.extractHeapMaximum() << endl;
-}
+// int main(){
+//     heap h(7);
+//     cout << "--- Initial Array/Heap Check ---" << endl;
+//     h.buildMaxHeap();
+//     cout << "After buildMaxHeap: ";
+//     h.print();
+//     h.heapSort(h.heapElements);
+//     cout << "--- Heap Sort Test ---" << endl;
+//     cout << "Sorted Array: ";
+//     h.print();
+//     h.insert(25);
+//     cout << "After inserting 25: ";
+//     h.print();
+//     int maxVal = h.extractHeapMaximum();
+//     cout << "Extracted Max: " << maxVal << endl;
+//     cout << "Heap after ExtractMax: ";
+//     h.print();
+//
+//     return 0;
+// }
